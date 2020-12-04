@@ -1,16 +1,38 @@
 # undo_redo_app
+Memento pattern that used for undo and redo.  
 
-A new Flutter application.
+## Technical
+I am  using cursor index position to point the actual data.
 
-## Getting Started
+|             |             |             |             |
+| ----------- | ----------- |-------------|-------------|
+| Data 1      | Data 2      |  Data 3     |Data 4       |
+|             |             |             |    (*)      |
 
-This project is a starting point for a Flutter application.
+When doing undo:  
+|             |             |             |             |
+| ----------- | ----------- |-------------|-------------|
+| Data 1      | Data 2      |  Data 3     |Data 4       |
+|             |             |  (*)           |          |
 
-A few resources to get you started if this is your first Flutter project:
+Cursor will move down the index, and send data 3 to ui/view
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+When doing redo:
+|             |             |             |             |
+| ----------- | ----------- |-------------|-------------|
+| Data 1      | Data 2      |  Data 3     |Data 4       |
+|             |             |             |    (*)      |
+Cursor will move up the index, and send data 4 to ui/view
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+When undo and inserting a new value:  
+Process 1: undo... (for example, 2x undo)
+|             |             |             |             |
+| ----------- | ----------- |-------------|-------------|
+| Data 1      | Data 2      |  Data 3     |Data 4       |
+|             |     (*)     |             |          |
+
+Process 2: user insering a new data: the datas that > cursor index will be removed and replaced by new data  
+|             |             |             |
+| ----------- | ----------- |-------------
+| Data 1      | Data 2      | My new data|
+|             |         |           (*)  |
